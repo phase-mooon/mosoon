@@ -5,231 +5,277 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>모순 — 양귀자 장편소설</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- 모든 서체: Noto Serif KR -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- ══════════════════════════════
-       내비게이션
-  ══════════════════════════════ -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-inner">
-      <span class="nav-logo">모순</span>
-      <ul class="nav-links">
-        <li><a href="#intro">인트로</a></li>
-        <li><a href="#family-select">가족 선택</a></li>
-        <li><a href="#result">결과</a></li>
-        <li><a href="#book-info">책 소개</a></li>
-      </ul>
+  <!-- ===== 네비게이션 (인트로 / 가족 선택 / 책 소개) ===== -->
+  <nav class="nav">
+    <span class="nav-logo">모순</span>
+    <div class="nav-links">
+      <a href="#intro">인트로</a>
+      <a href="#choice">가족 선택</a>
+      <a href="#bookinfo">책 소개</a>
     </div>
   </nav>
 
-  <!-- ══════════════════════════════
-       1. 인트로 섹션
-  ══════════════════════════════ -->
+  <!-- ===== 1. 인트로 섹션 ===== -->
   <section id="intro" class="intro-section">
-    <div class="intro-deco deco-left"></div>
-    <div class="intro-deco deco-right"></div>
-
     <div class="intro-content">
-      <p class="author-label">양귀자 장편소설</p>
-
-      <!-- '모순' 글자 + 책표지 공간 -->
-      <div class="title-book-wrap">
+      <div class="title-wrap">
+        <!-- 책 표지 슬롯 제거 — 순수 텍스트 타이틀, 얇은 웨이트 -->
         <h1 class="main-title">모순</h1>
-        <!-- 책표지 이미지 영역: 아래로 갈수록 사라지는 그라데이션 -->
-        <div class="title-cover-area">
-          <img
-            src="images/book-cover.jpg"
-            alt="모순 책 표지"
-            class="title-cover-img"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-          />
-          <!-- 이미지 없을 때 플레이스홀더 -->
-          <div class="title-cover-placeholder">
-            <span>책 표지 이미지</span>
+      </div>
+
+      <p class="copy-main">모든 삶에는 행복과 불행이 함께 존재합니다</p>
+      <p class="copy-sub">만약, 태어날 가족을 직접 고를 수 있다면,<br>당신은 어떤 모순을 감당하시겠습니까?</p>
+      <p class="copy-desc">이 페이지는 『모순』의 주인공 안진진의 입장에서<br>가족과 사랑을 선택해보는 인터랙티브 독서 경험입니다.</p>
+      <button class="btn-primary" onclick="scrollToSection('choice')">안진진의 삶으로 들어가기</button>
+    </div>
+    <div class="scroll-indicator">↓</div>
+  </section>
+
+  <!-- ===== 2. 가족 선택 섹션 (하나의 섹션 — 슬라이드 전환) ===== -->
+  <section id="choice" class="choice-section">
+
+    <!-- 스텝 인디케이터 -->
+    <div class="step-indicator">
+      <div class="step-dot active" id="dot-1"></div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="dot-2"></div>
+      <div class="step-line"></div>
+      <div class="step-dot" id="dot-3"></div>
+    </div>
+
+    <!-- 슬라이드 뷰포트 -->
+    <div class="slides-viewport">
+      <div class="slides-track" id="slides-track">
+
+        <!-- PART 1 : 어머니 -->
+        <div class="slide" id="slide-part1">
+          <div class="section-header">
+            <span class="part-label">Part 1</span>
+            <h2 class="section-title">당신의 어머니가 될 사람을 골라보세요</h2>
           </div>
-          <!-- 아래로 사라지는 그라데이션 오버레이 -->
-          <div class="title-cover-fade"></div>
-        </div>
-      </div>
+          <div class="cards-wrap">
+            <!-- 카드 A -->
+            <div class="card-outer" id="card-part1-A">
+              <div class="card-inner" onclick="flipCard('part1','A')">
+                <div class="card-face card-front">
+                  <div class="card-image-area">
+                    <img src="mother-A.jpg" alt="어머니 선택 A" />
+                    <span class="card-label-badge">선택 A</span>
+                  </div>
+                  <div class="card-text-area">
+                    <p class="card-title" id="front-title-part1-A"></p>
+                    <p class="card-desc"  id="front-desc-part1-A"></p>
+                  </div>
+                </div>
+                <div class="card-face card-back">
+                  <span class="card-label-badge back-badge">선택 A</span>
+                  <div class="card-back-content">
+                    <p class="card-back-title" id="back-title-part1-A"></p>
+                    <p class="card-back-desc"  id="back-desc-part1-A"></p>
+                  </div>
+                </div>
+              </div>
+              <p class="flip-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
+              <button class="btn-select" onclick="selectCard('part1','A')">선택하기</button>
+            </div>
+            <!-- 카드 B -->
+            <div class="card-outer" id="card-part1-B">
+              <div class="card-inner" onclick="flipCard('part1','B')">
+                <div class="card-face card-front">
+                  <div class="card-image-area">
+                    <img src="mother-B.jpg" alt="어머니 선택 B" />
+                    <span class="card-label-badge">선택 B</span>
+                  </div>
+                  <div class="card-text-area">
+                    <p class="card-title" id="front-title-part1-B"></p>
+                    <p class="card-desc"  id="front-desc-part1-B"></p>
+                  </div>
+                </div>
+                <div class="card-face card-back">
+                  <span class="card-label-badge back-badge">선택 B</span>
+                  <div class="card-back-content">
+                    <p class="card-back-title" id="back-title-part1-B"></p>
+                    <p class="card-back-desc"  id="back-desc-part1-B"></p>
+                  </div>
+                </div>
+              </div>
+              <p class="flip-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
+              <button class="btn-select" onclick="selectCard('part1','B')">선택하기</button>
+            </div>
+          </div>
+        </div><!-- /slide part1 -->
 
-      <p class="main-copy-large">모든 삶에는 행복과 불행이 함께 존재합니다</p>
-      <p class="main-copy-small">
-        만약, 태어날 가족을 직접 고를 수 있다면,<br />
-        당신은 어떤 모순을 감당하시겠습니까?
-      </p>
+        <!-- PART 2 : 아버지 -->
+        <div class="slide" id="slide-part2">
+          <div class="section-header">
+            <span class="part-label">Part 2</span>
+            <h2 class="section-title">당신의 아버지가 될 사람을 골라보세요</h2>
+          </div>
+          <div class="cards-wrap">
+            <div class="card-outer" id="card-part2-A">
+              <div class="card-inner" onclick="flipCard('part2','A')">
+                <div class="card-face card-front">
+                  <div class="card-image-area">
+                    <img src="father-A.jpg" alt="아버지 선택 A" />
+                    <span class="card-label-badge">선택 A</span>
+                  </div>
+                  <div class="card-text-area">
+                    <p class="card-title" id="front-title-part2-A"></p>
+                    <p class="card-desc"  id="front-desc-part2-A"></p>
+                  </div>
+                </div>
+                <div class="card-face card-back">
+                  <span class="card-label-badge back-badge">선택 A</span>
+                  <div class="card-back-content">
+                    <p class="card-back-title" id="back-title-part2-A"></p>
+                    <p class="card-back-desc"  id="back-desc-part2-A"></p>
+                  </div>
+                </div>
+              </div>
+              <p class="flip-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
+              <button class="btn-select" onclick="selectCard('part2','A')">선택하기</button>
+            </div>
+            <div class="card-outer" id="card-part2-B">
+              <div class="card-inner" onclick="flipCard('part2','B')">
+                <div class="card-face card-front">
+                  <div class="card-image-area">
+                    <img src="father-B.jpg" alt="아버지 선택 B" />
+                    <span class="card-label-badge">선택 B</span>
+                  </div>
+                  <div class="card-text-area">
+                    <p class="card-title" id="front-title-part2-B"></p>
+                    <p class="card-desc"  id="front-desc-part2-B"></p>
+                  </div>
+                </div>
+                <div class="card-face card-back">
+                  <span class="card-label-badge back-badge">선택 B</span>
+                  <div class="card-back-content">
+                    <p class="card-back-title" id="back-title-part2-B"></p>
+                    <p class="card-back-desc"  id="back-desc-part2-B"></p>
+                  </div>
+                </div>
+              </div>
+              <p class="flip-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
+              <button class="btn-select" onclick="selectCard('part2','B')">선택하기</button>
+            </div>
+          </div>
+        </div><!-- /slide part2 -->
 
-      <p class="intro-desc">
-        이 페이지는 『모순』의 주인공 안진진의 입장에서<br class="br-desktop" />
-        가족과 사랑을 선택해보는 인터랙티브 독서 경험입니다.
-      </p>
+        <!-- PART 3 : 배우자 -->
+        <div class="slide" id="slide-part3">
+          <div class="section-header">
+            <span class="part-label">Part 3</span>
+            <h2 class="section-title">당신의 배우자가 될 사람을 골라보세요</h2>
+          </div>
+          <div class="cards-wrap">
+            <div class="card-outer" id="card-part3-A">
+              <div class="card-inner" onclick="flipCard('part3','A')">
+                <div class="card-face card-front">
+                  <div class="card-image-area">
+                    <img src="spouse-A.jpg" alt="배우자 선택 A" />
+                    <span class="card-label-badge">선택 A</span>
+                  </div>
+                  <div class="card-text-area">
+                    <p class="card-title" id="front-title-part3-A"></p>
+                    <p class="card-desc"  id="front-desc-part3-A"></p>
+                  </div>
+                </div>
+                <div class="card-face card-back">
+                  <span class="card-label-badge back-badge">선택 A</span>
+                  <div class="card-back-content">
+                    <p class="card-back-title" id="back-title-part3-A"></p>
+                    <p class="card-back-desc"  id="back-desc-part3-A"></p>
+                  </div>
+                </div>
+              </div>
+              <p class="flip-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
+              <button class="btn-select btn-final" onclick="selectCard('part3','A')">선택 및 결과보기</button>
+            </div>
+            <div class="card-outer" id="card-part3-B">
+              <div class="card-inner" onclick="flipCard('part3','B')">
+                <div class="card-face card-front">
+                  <div class="card-image-area">
+                    <img src="spouse-B.jpg" alt="배우자 선택 B" />
+                    <span class="card-label-badge">선택 B</span>
+                  </div>
+                  <div class="card-text-area">
+                    <p class="card-title" id="front-title-part3-B"></p>
+                    <p class="card-desc"  id="front-desc-part3-B"></p>
+                  </div>
+                </div>
+                <div class="card-face card-back">
+                  <span class="card-label-badge back-badge">선택 B</span>
+                  <div class="card-back-content">
+                    <p class="card-back-title" id="back-title-part3-B"></p>
+                    <p class="card-back-desc"  id="back-desc-part3-B"></p>
+                  </div>
+                </div>
+              </div>
+              <p class="flip-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
+              <button class="btn-select btn-final" onclick="selectCard('part3','B')">선택 및 결과보기</button>
+            </div>
+          </div>
+        </div><!-- /slide part3 -->
 
-      <button class="btn-primary" id="startBtn">안진진의 삶으로 들어가기</button>
-    </div>
-
-    <div class="scroll-indicator">
-      <span class="scroll-arrow">↓</span>
-    </div>
+      </div><!-- /slides-track -->
+    </div><!-- /slides-viewport -->
   </section>
 
-  <!-- ══════════════════════════════
-       2. 가족 선택 섹션
-  ══════════════════════════════ -->
-  <section id="family-select" class="family-section">
-
-    <!-- PART 1 : 어머니 -->
-    <div id="part1" class="part-block">
-      <div class="part-header">
-        <span class="part-label">Part 1</span>
-        <h2 class="part-title">당신의 어머니가 될 사람을 골라보세요</h2>
-        <p class="part-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
-      </div>
-
-      <div class="cards-row" id="cards-part1"></div>
-
-      <!-- 카드 외부 선택 버튼 -->
-      <div class="part-action-wrap">
-        <button class="btn-prev" id="prev-part1" style="visibility:hidden;">← 이전으로</button>
-        <!-- ★ 선택하기 버튼: 클릭 시 선택 + 다음 파트로 이동 -->
-        <button class="btn-select-go" id="select-part1" disabled>선택하기 →</button>
-      </div>
-    </div>
-
-    <!-- PART 2 : 아버지 -->
-    <div id="part2" class="part-block part-hidden">
-      <div class="part-header">
-        <span class="part-label">Part 2</span>
-        <h2 class="part-title">당신의 아버지가 될 사람을 골라보세요</h2>
-        <p class="part-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
-      </div>
-
-      <div class="cards-row" id="cards-part2"></div>
-
-      <div class="part-action-wrap">
-        <button class="btn-prev" id="prev-part2">← 이전으로</button>
-        <button class="btn-select-go" id="select-part2" disabled>선택하기 →</button>
-      </div>
-    </div>
-
-    <!-- PART 3 : 배우자 -->
-    <div id="part3" class="part-block part-hidden">
-      <div class="part-header">
-        <span class="part-label">Part 3</span>
-        <h2 class="part-title">당신의 배우자가 될 사람을 골라보세요</h2>
-        <p class="part-hint">* 카드를 뒤집어서 추가 특성을 확인하세요.</p>
-      </div>
-
-      <div class="cards-row" id="cards-part3"></div>
-
-      <div class="part-action-wrap">
-        <button class="btn-prev" id="prev-part3">← 이전으로</button>
-        <!-- 마지막 파트: '선택 및 결과보기' -->
-        <button class="btn-select-go btn-result" id="select-part3" disabled>선택 및 결과보기 →</button>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ══════════════════════════════
-       3. 결과 섹션
-  ══════════════════════════════ -->
+  <!-- ===== 3. 결과 섹션 ===== -->
   <section id="result" class="result-section">
     <div class="result-inner">
-      <p class="result-label">당신의 선택</p>
-      <h2 class="result-title" id="result-title"></h2>
-
+      <span class="part-label">Result</span>
+      <h2 class="section-title result-title">당신이 선택한 가족</h2>
+      <p class="result-names" id="result-names">—</p>
       <div class="result-cards" id="result-cards"></div>
-      <div class="result-quotes" id="result-quotes"></div>
-
-      <p class="result-ending">
-        주인공 안진진은 어떤 삶을 살아왔으며, 어떤 선택을 하게 될까요?
-      </p>
-
-      <!-- 구매 링크: href를 실제 URL로 교체하세요 -->
-      <a href="#" class="btn-buy" id="result-buy-btn">『모순』 보러 가기</a>
-      <button class="btn-reset" id="resetBtn">처음부터 다시 하기</button>
+      <p class="result-closing">주인공 안진진은 어떤 삶을 살아왔으며, 어떤 선택을 하게 될까요?</p>
+      <!-- ★ href="#" 를 실제 구매 링크로 교체하세요 -->
+      <a href="#" class="btn-primary btn-buy" target="_blank">『모순』 보러 가기</a>
     </div>
   </section>
 
-  <!-- ══════════════════════════════
-       4. 책 소개 섹션
-  ══════════════════════════════ -->
-  <section id="book-info" class="book-section">
-    <div class="book-inner">
-      <p class="section-label">책 소개</p>
-      <h2 class="book-section-title">양귀자 장편소설 『모순』</h2>
+  <!-- ===== 4. 책 소개 섹션 ===== -->
+  <section id="bookinfo" class="bookinfo-section">
+    <div class="bookinfo-inner">
+      <span class="part-label">About the Book</span>
+      <h2 class="section-title bookinfo-title">양귀자 장편소설<br>『모순』</h2>
 
-      <div class="book-layout">
-        <!-- 책 표지 -->
-        <div class="book-cover-wrap">
-          <img
-            src="images/book-cover.jpg"
-            alt="모순 책 표지"
-            class="book-cover-img"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-          />
-          <div class="cover-placeholder"><span>표지 이미지</span></div>
+      <div class="bookinfo-top">
+        <div class="bookinfo-cover">
+          <!-- ★ 책 표지 이미지 경로 수정 가능 -->
+          <img src="book-cover.jpg" alt="모순 책 표지" />
         </div>
-
-        <!-- 책 소개 텍스트 -->
-        <div class="book-desc-wrap">
-          <!-- 소개문: 직접 수정하세요 -->
-          <p class="book-desc">
-            양귀자의 장편소설 『모순』은 삶의 아이러니와 인간 관계의 복잡성을 섬세하게 파고듭니다.
-            주인공 안진진은 두 어머니, 두 아버지, 두 남자 사이에서 끊임없는 선택과 모순 앞에 서게 됩니다.
-          </p>
-          <p class="book-desc">
-            행복과 불행, 사랑과 의무, 욕망과 현실 — 우리 삶의 모든 순간에 녹아든 모순을 통해,
-            작가는 독자에게 '나라면 어떤 선택을 했을까'라는 질문을 던집니다.
-          </p>
-          <ul class="book-info-list">
-            <!-- 도서 정보: 직접 수정하세요 -->
-            <li><span>지은이</span>양귀자</li>
-            <li><span>출판사</span>쓸다</li>
-            <li><span>장르</span>장편소설</li>
-          </ul>
-          <!-- 구매 버튼: href를 실제 링크로 교체하세요 -->
-          <a href="#" class="btn-buy">『모순』 보러 가기</a>
+        <div class="bookinfo-text">
+          <!-- ★ 아래 텍스트를 자유롭게 수정하세요 -->
+          <p>『모순』은 양귀자 작가가 삶의 행복과 불행, 그리고 그 사이에서 살아가는 인간의 모순을 섬세하게 그려낸 장편소설입니다.</p>
+          <p>주인공 안진진은 어머니, 아버지, 사랑하는 사람 사이에서 끊임없이 자신의 선택과 마주합니다. 어떤 삶을 살더라도 피할 수 없는 모순을 통해, 독자는 자신만의 삶의 의미를 발견하게 됩니다.</p>
+          <p>출판사: (주)쓸모 &nbsp;|&nbsp; 출간: 0000년 0월 &nbsp;|&nbsp; 쪽수: 000p</p>
+          <!-- ★ 구매 링크 수정 가능 -->
+          <a href="#" class="btn-primary btn-buy" target="_blank">『모순』 보러 가기</a>
         </div>
       </div>
 
-      <!-- 북트레일러 영역 -->
       <div class="video-wrap">
-        <p class="video-label">북트레일러</p>
-        <div class="video-box">
-          <!--
-            유튜브 링크: https://youtu.be/0qFoU6-WsAU
-            영상 ID: 0qFoU6-WsAU
-            썸네일 클릭 시 유튜브 재생 (클릭 전까지 썸네일 표시)
-          -->
-          <div class="yt-facade" id="ytFacade" data-videoid="0qFoU6-WsAU">
-            <img
-              src="https://img.youtube.com/vi/0qFoU6-WsAU/maxresdefault.jpg"
-              alt="모순 북트레일러 썸네일"
-              class="yt-thumb"
-              onerror="this.src='https://img.youtube.com/vi/0qFoU6-WsAU/hqdefault.jpg'"
-            />
-            <button class="yt-play-btn" aria-label="영상 재생">
-              <svg viewBox="0 0 68 48" width="68" height="48">
-                <path d="M66.52 7.74C65.7 4.56 63.22 2.06 60.06 1.24 54.83 0 34 0 34 0S13.17 0 7.94 1.24C4.78 2.06 2.3 4.56 1.48 7.74 0 13.05 0 24 0 24s0 10.95 1.48 16.26c.82 3.18 3.3 5.68 6.46 6.5C13.17 48 34 48 34 48s20.83 0 26.06-1.24c3.16-.82 5.64-3.32 6.46-6.5C68 34.95 68 24 68 24S68 13.05 66.52 7.74z" fill="#ff0000"/>
-                <path d="M27 34l18-10-18-10v20z" fill="#fff"/>
-              </svg>
-            </button>
-          </div>
+        <h3 class="video-title">북트레일러</h3>
+        <div class="video-box" id="video-box" onclick="playVideo()">
+          <img
+            src="https://img.youtube.com/vi/0qFoU6-WsAU/maxresdefault.jpg"
+            alt="모순 북트레일러 썸네일"
+            class="video-thumb"
+            onerror="this.src='https://img.youtube.com/vi/0qFoU6-WsAU/hqdefault.jpg'"
+          />
+          <div class="play-btn">▶</div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- 푸터 -->
-  <footer class="site-footer">
-    <p class="footer-text">이 페이지는 양귀자 장편소설 『모순』을 소개하기 위해 제작된 인터랙티브 페이지입니다.</p>
-    <p class="footer-copy">© 2025 모순 인터랙티브 페이지</p>
+  <footer class="footer">
+    <p>『모순』 &copy; 양귀자 &nbsp;|&nbsp; 인터랙티브 독서 경험 페이지</p>
   </footer>
 
   <script src="script.js"></script>
